@@ -1,0 +1,554 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     22710,        546]
+NotebookOptionsPosition[     21692,        523]
+NotebookOutlinePosition[     22095,        540]
+CellTagsIndexPosition[     22052,        537]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Affine and Vigenere Encryption", "Title",
+ CellChangeTimes->{{3.441033406019705*^9, 3.4410334126892953`*^9}, {
+  3.555847633844427*^9, 3.5558476412849035`*^9}, {3.555937816027893*^9, 
+  3.555937820814633*^9}, {3.6622915654388895`*^9, 3.6622915755909047`*^9}, {
+  3.7873510794356856`*^9, 
+  3.7873511057463355`*^9}},ExpressionUUID->"6123857b-1103-4e50-96ed-\
+194e25c18181"],
+
+Cell["\<\
+This notebook collects useful functions for the analysis of classical ciphers \
+such as the Affine Cipher, the Vigenere cipher and the One Time Pad . 
+Evaluate the cell at the bottom to make all functions available.
+\
+\>", "Text",
+ CellChangeTimes->{{3.555847652530738*^9, 3.555847843840104*^9}, {
+   3.5558522345723195`*^9, 3.555852280587109*^9}, 3.555852326852251*^9, 
+   3.5558528187949133`*^9, {3.55593631143941*^9, 3.55593632418736*^9}, {
+   3.555936367668582*^9, 3.5559364418330064`*^9}, 3.555936718602702*^9, {
+   3.556063257834717*^9, 3.556063300906392*^9}, 3.556064236582436*^9, {
+   3.5560646629623847`*^9, 3.556064668656395*^9}, {3.5672910855120163`*^9, 
+   3.5672910939240284`*^9}, {3.567291261676268*^9, 3.56729129134231*^9}, {
+   3.5677647343903184`*^9, 3.5677647401126456`*^9}, {3.662588244933068*^9, 
+   3.6625882949231405`*^9}, {3.662642430325448*^9, 3.662642452167085*^9}, 
+   3.782232600475973*^9, {3.7822410898599305`*^9, 3.7822411125017834`*^9}, {
+   3.7873511124760265`*^9, 3.7873511346243687`*^9}, {3.7873511672516994`*^9, 
+   3.7873511767542872`*^9}},ExpressionUUID->"a0667494-d1fd-4949-b634-\
+063822e670fe"],
+
+Cell["Encryption Tools ", "Subtitle",
+ CellChangeTimes->{{3.556064214477197*^9, 3.556064231933628*^9}, {
+  3.662291587583104*^9, 3.6622915912224674`*^9}, {3.662642415869848*^9, 
+  3.66264242316744*^9}, {3.7873512573886766`*^9, 
+  3.787351265231498*^9}},ExpressionUUID->"fbc1a9f1-5ae0-42ad-a63e-\
+3c83e782d8c9"],
+
+Cell[TextData[{
+ StyleBox["affinecipher[plaintext, key]",
+  FontWeight->"Bold"],
+ " does an affine encryption. ",
+ StyleBox["plaintext",
+  FontWeight->"Bold"],
+ " should all be lower case, ",
+ StyleBox["ciphertext",
+  FontWeight->"Bold"],
+ " will also be all lower case. ",
+ StyleBox["Use the decryption key to decrypt.\n",
+  FontSlant->"Italic"],
+ StyleBox["makebarchart[mytext]",
+  FontWeight->"Bold"],
+ " makes a bar chart or letter frequencies. This should be all lower case \
+text or all upper case text, without spaces or special characters.\n",
+ StyleBox["vigenere[plaintext, key]",
+  FontWeight->"Bold"],
+ " does Vigenere encryption. Plaintext and key must be all lower case. The \
+ciphertext will also be all lower case ",
+ StyleBox["Can also be used for decryption.\n",
+  FontSlant->"Italic"],
+ StyleBox["vigenereMakeDecrypt[key]",
+  FontWeight->"Bold"],
+ " makes the Vigenere decryption key for a given encryption key. ",
+ StyleBox["Use this with the vigenere function for decryption. \n",
+  FontSlant->"Italic"],
+ StyleBox["OTPEncrypt[plaintext, key]",
+  FontWeight->"Bold"],
+ " does One Time Pad encryption. Plaintext and key must be all lower case. \
+The key must be at least as long as the plaintext. The ciphertext will also \
+be all lower case.\n",
+ StyleBox["OTPDecrypt[plaintext, key]",
+  FontWeight->"Bold"],
+ " does One Time Pad decryption. Ciphertext and key must be all lower case. \
+The key must be at least as long as the ciphertext. The plaintext will also \
+be all lower case.\n"
+}], "Text",
+ CellChangeTimes->{{3.567764752296343*^9, 3.567764785332232*^9}, {
+   3.5677648154729557`*^9, 3.567764816549018*^9}, 3.6622917787902226`*^9, {
+   3.662291827232066*^9, 3.6622920257269135`*^9}, {3.6622920727426147`*^9, 
+   3.6622921166340036`*^9}, 3.6625883053751554`*^9, {3.662635083357583*^9, 
+   3.662635189915349*^9}, {3.662635248217712*^9, 3.662635288255891*^9}, {
+   3.782240671986209*^9, 3.7822406987457595`*^9}, {3.7822407449759293`*^9, 
+   3.7822410714499006`*^9}, {3.782241121767168*^9, 3.78224120973599*^9}, {
+   3.7822412629764977`*^9, 3.782241266269842*^9}, {3.7873511891743016`*^9, 
+   3.7873512381222486`*^9}, {3.7873512722802343`*^9, 3.787351285562022*^9}, {
+   3.7873520376799088`*^9, 3.7873521074532785`*^9}, {3.7873521755490494`*^9, 
+   3.7873522053349123`*^9}, {3.7873916970095305`*^9, 
+   3.7873917000504656`*^9}, {3.7886100505928307`*^9, 
+   3.7886101244287205`*^9}, {3.7886204816429634`*^9, 3.788620526667301*^9}, {
+   3.7886211574238195`*^9, 
+   3.788621203393402*^9}},ExpressionUUID->"21ffd2bc-7660-4317-a953-\
+3091b6d38376"],
+
+Cell["Functions for attack on Vigenere system", "Subtitle",
+ CellChangeTimes->{{3.662635407039853*^9, 3.662635440739658*^9}, {
+  3.782241273724065*^9, 
+  3.7822412843694487`*^9}},ExpressionUUID->"415b5fbc-2a30-4ce3-965f-\
+f38e0fcabe11"],
+
+Cell[TextData[{
+ StyleBox["coincidenceprob[text, distance]  ",
+  FontWeight->"Bold"],
+ " takes a ciphertext, computes frequencies of coincidences up to the given \
+distance, and plots these. Spikes indicate plausible key lengths.     \n",
+ StyleBox["barChartByPosition[ciphertext, keylength, position]  ",
+  FontWeight->"Bold"],
+ "makes frequency plot of characters in the ciphertext at positions  ",
+ StyleBox["position + j*keylength, j = 0, 1, 2, ...",
+  FontSlant->"Italic"],
+ StyleBox["\n",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.66263546941366*^9, 3.662635479131861*^9}, {
+  3.662635518058776*^9, 3.662635571043178*^9}, {3.66263562884926*^9, 
+  3.662635776412057*^9}, {3.662647108818392*^9, 3.662647134443525*^9}, {
+  3.662657196030715*^9, 3.66265720051111*^9}, {3.7822412350554953`*^9, 
+  3.7822412539395685`*^9}},ExpressionUUID->"23a46b4d-e858-4afa-8e1d-\
+9236db42f157"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"makebarchart", "[", "mytext_", "]"}], ":=", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"TextNumeric", "=", 
+     RowBox[{"ToCharacterCode", "[", "mytext", "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"TextNumeric", "=", 
+     RowBox[{"TextNumeric", "-", 
+      RowBox[{"Min", "[", "TextNumeric", "]"}]}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"counts", "=", 
+     RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{"counts", "=", 
+        RowBox[{"Append", "[", 
+         RowBox[{"counts", ",", 
+          RowBox[{"Count", "[", 
+           RowBox[{"TextNumeric", ",", "j"}], "]"}]}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", "0", ",", "25"}], "}"}]}], "]"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"BarChart", "[", 
+      RowBox[{"counts", ",", 
+       RowBox[{"ChartLabels", "\[Rule]", 
+        RowBox[{"Characters", "[", 
+         RowBox[{"FromCharacterCode", "[", 
+          RowBox[{"65", "+", 
+           RowBox[{"Range", "[", 
+            RowBox[{"0", ",", "25"}], "]"}]}], "]"}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", ")"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"randomtext", "[", "textlength_", "]"}], ":=", " ", 
+   RowBox[{"FromCharacterCode", "[", 
+    RowBox[{
+     RowBox[{"RandomInteger", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", "25"}], "}"}], ",", "textlength"}], "]"}], "+", 
+     "97"}], "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Encryption", " ", "and", " ", "decryption"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"affinecipher", "[", 
+    RowBox[{"plaintext_", ",", "key_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"numericplaintext", "=", 
+       RowBox[{
+        RowBox[{"ToCharacterCode", "[", "plaintext", "]"}], "-", "97"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"numericciphertext", " ", "=", " ", 
+       RowBox[{"Mod", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"key", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "*", "numericplaintext"}], "+", 
+          RowBox[{"key", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], ",", "26"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{"FromCharacterCode", "[", 
+        RowBox[{"numericciphertext", "+", "97"}], "]"}], "]"}]}], 
+     "\[IndentingNewLine]", "}"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"vigenere", "[", 
+    RowBox[{"plaintext_", ",", "key_"}], "]"}], ":=", 
+   RowBox[{"(", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"mplain", "=", 
+      RowBox[{
+       RowBox[{"ToCharacterCode", "[", "plaintext", "]"}], "-", "97"}]}], ";",
+      "\[IndentingNewLine]", 
+     RowBox[{"k0", "=", 
+      RowBox[{
+       RowBox[{"LetterNumber", "[", "key", "]"}], "-", "1"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"J", "=", 
+      RowBox[{
+       RowBox[{"Range", "[", 
+        RowBox[{"Length", "[", "mplain", "]"}], "]"}], "-", "1"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"mciph", "=", 
+      RowBox[{"Mod", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"k0", "[", 
+          RowBox[{"[", 
+           RowBox[{
+            RowBox[{"Mod", "[", 
+             RowBox[{"J", ",", 
+              RowBox[{"Length", "[", "k0", "]"}]}], "]"}], "+", "1"}], "]"}], 
+          "]"}], "+", "mplain"}], ",", "26"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"StringJoin", "[", 
+      RowBox[{"FromCharacterCode", "[", 
+       RowBox[{"mciph", "+", "97"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+    ")"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"vigenereMakeDecrypt", "[", "key_", "]"}], ":=", 
+   RowBox[{"(", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"k0", "=", 
+      RowBox[{
+       RowBox[{"ToCharacterCode", "[", "key", "]"}], "-", "97"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"FromCharacterCode", "[", 
+      RowBox[{
+       RowBox[{"Mod", "[", 
+        RowBox[{
+         RowBox[{"-", "k0"}], ",", "26"}], "]"}], " ", "+", " ", "97"}], 
+      "]"}]}], ")"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"coincidenceprob", "[", 
+    RowBox[{"ciphertext_", ",", "distance_"}], "]"}], ":=", 
+   RowBox[{"(", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"ciphernum", " ", "=", " ", 
+      RowBox[{
+       RowBox[{"ToCharacterCode", "[", "ciphertext", "]"}], " ", "-", " ", 
+       "97"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"clength", "=", 
+      RowBox[{"Length", "[", "ciphernum", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"coinc", "=", 
+      RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"overlap", "=", 
+          RowBox[{"Count", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"ciphernum", "[", 
+              RowBox[{"[", 
+               RowBox[{"Range", "[", 
+                RowBox[{
+                 RowBox[{"j", "+", "1"}], ",", "clength"}], "]"}], "]"}], 
+              "]"}], "-", 
+             RowBox[{"ciphernum", "[", 
+              RowBox[{"[", 
+               RowBox[{"Range", "[", 
+                RowBox[{"1", ",", 
+                 RowBox[{"clength", "-", "j"}]}], "]"}], "]"}], "]"}]}], ",", 
+            "0"}], "]"}]}], ";", "\[IndentingNewLine]", "     ", 
+         RowBox[{"coinc", "=", 
+          RowBox[{"Append", "[", 
+           RowBox[{"coinc", ",", "overlap"}], "]"}]}]}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", "1", ",", "distance"}], "}"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"ListLinePlot", "[", 
+      RowBox[{
+       RowBox[{"coinc", "/", "clength"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", "Thick"}]}], "]"}]}], 
+    "\[IndentingNewLine]", ")"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"frequenciesByPosition", "[", 
+    RowBox[{"ciphertext_", ",", "keylength_", ",", "position_"}], "]"}], ":=", 
+   RowBox[{"(", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"clength", "=", 
+      RowBox[{"StringLength", "[", "ciphertext", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"extracted", " ", "=", " ", 
+      RowBox[{"StringPart", "[", 
+       RowBox[{"ciphertext", ",", 
+        RowBox[{"position", ";;", "clength", ";;", "keylength"}]}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"ciphernum", " ", "=", " ", 
+      RowBox[{
+       RowBox[{"ToCharacterCode", "[", "extracted", "]"}], "-", "96"}]}], " ",
+      ";", "\[IndentingNewLine]", 
+     RowBox[{"frequencies", "=", 
+      RowBox[{"0", "*", 
+       RowBox[{"Range", "[", "26", "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"frequencies", "[", 
+         RowBox[{"[", "j", "]"}], "]"}], "=", 
+        RowBox[{"Count", "[", 
+         RowBox[{"ciphernum", ",", "j"}], "]"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", "1", ",", "26"}], "}"}]}], "]"}], ";", " ", 
+     "\[IndentingNewLine]", "frequencies"}], ")"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"barChartByPosition", "[", 
+   RowBox[{"ciphertext_", ",", "keylength_", ",", "position_"}], "]"}], ":=", 
+  RowBox[{"(", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"freq", "=", " ", 
+     RowBox[{"frequenciesByPosition", "[", 
+      RowBox[{"ciphertext", ",", "keylength", ",", "position"}], "]"}]}], ";",
+     "\[IndentingNewLine]", 
+    RowBox[{"BarChart", "[", 
+     RowBox[{"frequencies", ",", 
+      RowBox[{"ChartLabels", "\[Rule]", 
+       RowBox[{"Characters", "[", 
+        RowBox[{"FromCharacterCode", "[", 
+         RowBox[{"65", "+", 
+          RowBox[{"Range", "[", 
+           RowBox[{"0", ",", "25"}], "]"}]}], "]"}], "]"}]}], ",", 
+      RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}]}], 
+   "\[IndentingNewLine]", ")"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"likelyShiftByPosition", "[", 
+    RowBox[{"ciphertext_", ",", "keylength_", ",", "position_"}], "]"}], ":=", 
+   RowBox[{"(", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"freq", "=", " ", 
+      RowBox[{"frequenciesByPosition", "[", 
+       RowBox[{"ciphertext", ",", "keylength", ",", "position"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"logLiks", " ", "=", " ", 
+      RowBox[{"0", "*", 
+       RowBox[{"Range", "[", "26", "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"logLiks", "[", 
+         RowBox[{"[", "j", "]"}], "]"}], " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Flatten", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"freq", "[", 
+             RowBox[{"[", 
+              RowBox[{"Range", "[", 
+               RowBox[{"j", ",", "26"}], "]"}], "]"}], "]"}], ",", 
+            RowBox[{"freq", "[", 
+             RowBox[{"[", 
+              RowBox[{"Range", "[", 
+               RowBox[{"1", ",", 
+                RowBox[{"j", "-", "1"}]}], "]"}], "]"}], "]"}]}], "}"}], 
+          "]"}], ".", 
+         RowBox[{"Log", "[", 
+          RowBox[{"frequenciesEnglish", " ", "+", "0."}], "]"}]}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", "1", ",", "26"}], "}"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"logLiks", " ", "=", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"logLiks", " ", "-", " ", 
+         RowBox[{"Min", "[", "logLiks", "]"}]}], ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Max", "[", "logLiks", "]"}], " ", "-", " ", 
+         RowBox[{"Min", "[", "logLiks", "]"}]}], ")"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"BarChart", "[", 
+      RowBox[{"logLiks", ",", 
+       RowBox[{"ChartLabels", "\[Rule]", 
+        RowBox[{"Characters", "[", 
+         RowBox[{"FromCharacterCode", "[", 
+          RowBox[{"65", "+", 
+           RowBox[{"Range", "[", 
+            RowBox[{"0", ",", "25"}], "]"}]}], "]"}], "]"}]}], ",", 
+       RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}]}], 
+    "\[IndentingNewLine]", ")"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"frequenciesEnglish", "=", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "82", ",", "15", ",", "28", ",", "43", ",", "127", ",", "22", ",", "20",
+        ",", "61", ",", "70", ",", "2", ",", "8", ",", "40", ",", "24", ",", 
+       "67", ",", "75", ",", "19", ",", "1", ",", "60", ",", "63", ",", "91", 
+       ",", "28", ",", "10", ",", "23", ",", "1", ",", "20", ",", "1"}], 
+      "}"}], "/", "1001"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"OTPEncrypt", "[", 
+    RowBox[{"plaintext_", ",", "key_"}], "]"}], ":=", 
+   RowBox[{"(", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"mplain", "=", 
+      RowBox[{
+       RowBox[{"ToCharacterCode", "[", "plaintext", "]"}], "-", "97"}]}], ";",
+      "\[IndentingNewLine]", 
+     RowBox[{"k0", "=", 
+      RowBox[{
+       RowBox[{"LetterNumber", "[", "key", "]"}], "-", "1"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"k0", " ", "=", " ", 
+      RowBox[{"k0", "[", 
+       RowBox[{"[", 
+        RowBox[{"Range", "[", 
+         RowBox[{"Length", "[", "mplain", "]"}], "]"}], "]"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"mciph", "=", 
+      RowBox[{"Mod", "[", 
+       RowBox[{
+        RowBox[{"mplain", " ", "+", " ", "k0"}], ",", " ", "26"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"StringJoin", "[", 
+      RowBox[{"FromCharacterCode", "[", 
+       RowBox[{"mciph", "+", "97"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+    ")"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"OTPDecrypt", "[", 
+   RowBox[{"plaintext_", ",", "key_"}], "]"}], ":=", 
+  RowBox[{"(", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"mplain", "=", 
+     RowBox[{
+      RowBox[{"ToCharacterCode", "[", "plaintext", "]"}], "-", "97"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"k0", "=", 
+     RowBox[{
+      RowBox[{"LetterNumber", "[", "key", "]"}], "-", "1"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"k0", " ", "=", " ", 
+     RowBox[{"k0", "[", 
+      RowBox[{"[", 
+       RowBox[{"Range", "[", 
+        RowBox[{"Length", "[", "mplain", "]"}], "]"}], "]"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"mciph", "=", 
+     RowBox[{"Mod", "[", 
+      RowBox[{
+       RowBox[{"mplain", " ", "-", " ", "k0"}], ",", " ", "26"}], "]"}]}], 
+    ";", "\[IndentingNewLine]", 
+    RowBox[{"StringJoin", "[", 
+     RowBox[{"FromCharacterCode", "[", 
+      RowBox[{"mciph", "+", "97"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+   ")"}]}], "\[IndentingNewLine]"}], "Input",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ InitializationCell->True,
+ CellChangeTimes->{{3.5560633105160093`*^9, 3.5560633296884427`*^9}, {
+   3.5560635554988394`*^9, 3.5560635566220417`*^9}, {3.5560638712297945`*^9, 
+   3.556063872789797*^9}, {3.5560646869396267`*^9, 3.5560646906056337`*^9}, {
+   3.662291613407686*^9, 3.6622916838907337`*^9}, {3.662291761469491*^9, 
+   3.6622917620535493`*^9}, {3.662588315868171*^9, 3.6625883367412004`*^9}, {
+   3.662588395552286*^9, 3.662588413069312*^9}, {3.662635237129668*^9, 
+   3.662635241916038*^9}, {3.662635506042901*^9, 3.662635507214098*^9}, {
+   3.662635579530684*^9, 3.662635617392645*^9}, {3.662635694364227*^9, 
+   3.662635695609869*^9}, 3.662642368489714*^9, {3.662645716840463*^9, 
+   3.662645721117505*^9}, {3.662647145356398*^9, 3.662647149968436*^9}, {
+   3.7873513130535707`*^9, 3.787351314261357*^9}, {3.7873520249535036`*^9, 
+   3.7873520256122613`*^9}, {3.787352334370144*^9, 3.7873523658856525`*^9}, {
+   3.787354631770641*^9, 3.7873547445159316`*^9}, {3.787354840246461*^9, 
+   3.7873548822355194`*^9}, {3.7873549289343615`*^9, 
+   3.7873549527793813`*^9}, {3.7873550003345795`*^9, 
+   3.7873550298806453`*^9}, {3.787355062692122*^9, 3.787355082374651*^9}, {
+   3.787355114905552*^9, 3.787355115621647*^9}, {3.7873554140169992`*^9, 
+   3.7873554695468802`*^9}, {3.7873917260610876`*^9, 3.787391750991396*^9}, {
+   3.787391989069724*^9, 3.787392012222*^9}, {3.787392045513776*^9, 
+   3.787392047398574*^9}, {3.7873928738456593`*^9, 3.787392884874149*^9}, {
+   3.787393200031761*^9, 3.7873932070031776`*^9}, {3.787394096100251*^9, 
+   3.7873941439444103`*^9}, 3.78739424340617*^9, {3.7876153124841175`*^9, 
+   3.7876153134813514`*^9}, {3.7876153648711214`*^9, 3.78761544227717*^9}, 
+   3.7876157021954484`*^9, {3.7876774866985235`*^9, 3.7876774906310654`*^9}, {
+   3.7879304633583994`*^9, 3.7879305338215556`*^9}, {3.7886203666536436`*^9, 
+   3.788620398443488*^9}, {3.7886204511318245`*^9, 3.7886204566510897`*^9}, {
+   3.7886205448608155`*^9, 3.788620552187081*^9}, {3.7886205949144325`*^9, 
+   3.788620628941023*^9}, {3.78862065914906*^9, 3.7886206700119414`*^9}, {
+   3.788620732942133*^9, 3.7886209004626975`*^9}, {3.7886209512317276`*^9, 
+   3.788621001970249*^9}},
+ CellLabel->
+  "In[380]:=",ExpressionUUID->"78995eb1-d03f-4385-8f0d-965ec2dcecfa"]
+},
+ScreenStyleEnvironment->"Presentation",
+Evaluator->"Local",
+WindowSize->{1080, 634},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Classroom.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 378, 6, 101, "Title",ExpressionUUID->"6123857b-1103-4e50-96ed-194e25c18181"],
+Cell[926, 28, 1142, 18, 137, "Text",ExpressionUUID->"a0667494-d1fd-4949-b634-063822e670fe"],
+Cell[2071, 48, 310, 5, 56, "Subtitle",ExpressionUUID->"fbc1a9f1-5ae0-42ad-a63e-3c83e782d8c9"],
+Cell[2384, 55, 2568, 53, 410, "Text",ExpressionUUID->"21ffd2bc-7660-4317-a953-3091b6d38376"],
+Cell[4955, 110, 236, 4, 56, "Subtitle",ExpressionUUID->"415b5fbc-2a30-4ce3-965f-f38e0fcabe11"],
+Cell[5194, 116, 894, 18, 162, "Text",ExpressionUUID->"23a46b4d-e858-4afa-8e1d-9236db42f157"],
+Cell[6091, 136, 15597, 385, 2365, "Input",ExpressionUUID->"78995eb1-d03f-4385-8f0d-965ec2dcecfa",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ InitializationCell->True]
+}
+]
+*)
+

@@ -1,0 +1,374 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17022,        366]
+NotebookOptionsPosition[     14803,        321]
+NotebookOutlinePosition[     15228,        339]
+CellTagsIndexPosition[     15185,        336]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Classical Cipher Exercises (1/22/20)", "Title",
+ CellChangeTimes->{{3.661537216942315*^9, 3.6615372197035913`*^9}, {
+   3.662286780655373*^9, 3.662286783207025*^9}, {3.662725979349171*^9, 
+   3.6627259865205812`*^9}, {3.7765287058737397`*^9, 3.776528714434596*^9}, {
+   3.7880036616363926`*^9, 3.7880036663884077`*^9}, 3.7880037683875103`*^9, {
+   3.788004684181689*^9, 3.788004687449707*^9}, {3.7881162193806157`*^9, 
+   3.7881162204116488`*^9}, {3.7886979247712884`*^9, 3.788697931983575*^9}, {
+   3.7886980085671663`*^9, 
+   3.7886980140665617`*^9}},ExpressionUUID->"b96e3780-13e8-40e4-a25e-\
+1af71aabfc8f"],
+
+Cell["Initialize with previously defined notebooks", "Subtitle",
+ CellChangeTimes->{{3.662725991337857*^9, 3.66272599506207*^9}, {
+  3.7765288438315344`*^9, 3.7765288470558567`*^9}, {3.7880037735341206`*^9, 
+  3.7880037790661297`*^9}, {3.788116205841404*^9, 3.788116212863657*^9}, {
+  3.7881162962726974`*^9, 3.7881163422765884`*^9}, {3.788178340738905*^9, 
+  3.7881783514942927`*^9}},ExpressionUUID->"1248eb4e-1bf8-4d85-aa9e-\
+d8b6988a8603"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "change", " ", "the", " ", "next", " ", "two", " ", "lines", " ", "as", 
+    " ", "needed", " ", "so", " ", "Mathematica", " ", "finds", " ", "these", 
+    " ", "notebooks"}], " ", "*)"}], " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "NotebookEvaluate", "[", "\"\<D:\\\\211\\\\TextProcessing.nb\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "NotebookEvaluate", "[", "\"\<D:\\\\211\\\\ClassicalCiphers.nb\>\"", "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.7881165160327773`*^9, 3.7881167311334057`*^9}, {
+   3.7881167871257925`*^9, 3.7881168291761646`*^9}, {3.7881783723613663`*^9, 
+   3.7881783950781345`*^9}, 3.7881784281463556`*^9, {3.7886982112877254`*^9, 
+   3.788698215857525*^9}, {3.7887018755856314`*^9, 3.788701895480585*^9}, {
+   3.7887022397375126`*^9, 3.7887022561133223`*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"8084c9ac-6113-4097-b6a7-8fb628c88e92"],
+
+Cell[BoxData["\<\"D:\\\\211\"\>"], "Output",
+ CellChangeTimes->{3.7887022153999867`*^9, 3.788702256822632*^9},
+ CellLabel->"Out[4]=",ExpressionUUID->"a0897d49-614e-4754-a96d-f238def6e71d"]
+}, Open  ]],
+
+Cell["Known Plaintext Attack for Affine Cipher", "Subtitle",
+ CellChangeTimes->{{3.662725991337857*^9, 3.66272599506207*^9}, {
+  3.7765288438315344`*^9, 3.7765288470558567`*^9}, {3.7880037735341206`*^9, 
+  3.7880037790661297`*^9}, {3.788116205841404*^9, 3.788116212863657*^9}, {
+  3.7886979413177204`*^9, 
+  3.788697974989856*^9}},ExpressionUUID->"182e0878-9741-4d0e-9866-\
+46354c1a5b67"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["The plaintext  ",
+  FontWeight->"Plain"],
+ "kirstenwilljointhelist",
+ StyleBox["  has been encrypted with an affine cipher. The ciphertext is ",
+  FontWeight->"Plain"],
+ StyleBox["ugryfepagbbnwgpfzebgyf ",
+  FontWeight->"Plain",
+  FontSlant->"Italic"],
+ StyleBox[".\nFind the encryption key. \n\n",
+  FontWeight->"Plain"],
+ "Solution.\n\ny = \[Alpha]",
+ StyleBox["x + \[Beta]\n ",
+  FontWeight->"Plain"]
+}], "Subsection",
+ CellChangeTimes->{{3.7765327409292192`*^9, 3.776532776433769*^9}, {
+  3.77660216712481*^9, 3.776602181058208*^9}, {3.7881163593031588`*^9, 
+  3.788116374799988*^9}, {3.788698487316013*^9, 3.7886986508018427`*^9}, {
+  3.7886987067626467`*^9, 3.788698717309367*^9}, {3.7887020672561045`*^9, 
+  3.788702095301038*^9}, {3.7887021534947004`*^9, 3.7887021553627567`*^9}, {
+  3.7887023340610447`*^9, 3.7887024285910015`*^9}, {3.788706996207328*^9, 
+  3.7887069964407024`*^9}},ExpressionUUID->"cb15d116-3634-4833-a128-\
+24c2e1279aa3"],
+
+Cell["Given Ciphertext Attack for Affine Cipher", "Subtitle",
+ CellChangeTimes->{{3.662725991337857*^9, 3.66272599506207*^9}, {
+  3.7765288438315344`*^9, 3.7765288470558567`*^9}, {3.7880037735341206`*^9, 
+  3.7880037790661297`*^9}, {3.788116205841404*^9, 3.788116212863657*^9}, {
+  3.7886979413177204`*^9, 3.788697974989856*^9}, {3.788698066835286*^9, 
+  3.788698070395458*^9}, {3.7886981531474648`*^9, 
+  3.7886981604138746`*^9}},ExpressionUUID->"ff48f62d-b1f0-4ff6-bb90-\
+62503d51e406"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["A plaintext has been encrypted with an affine cipher, and the \
+result is the ciphertext\n\nWZJBR CATEL GRCCZ JBHTL OCATP GBFIB JOZEX AGLRC \
+DBRDZ GOLOP OZRCZ XHLOP RANOP BCCAT ELGTK SBXTB OIEZG BDZDT OCRAT ETSCB RDNXA \
+ILRBK KZLOC TIBRR ATILI SZOPB PZJAT OATGS LCCST RZXHE TSSIZ JOMTX BNRTL CJBRX \
+GBDDT IRZEN SSZEP ZZILT RCATO RATGT DTDMT GTIAT GDZCA TGRKG ZDLRT BOIRS LKKLO \
+PATGA BOINO ITGAT GKLSS ZJIGT JZNCB SLCCS TXGLD RZOXZ YTGTI MZZHR ATHOT JLCYT \
+GFJTS SEZGL CJBRC ABCMT BNCLE NSZSI RCZGF ZECAT MTRCS LETTY TGSLY TIBOI WZETS \
+CCABC LCJBR BCGNT PNLIT MZZHE ZGBOF KLSPG LDPZL OPZOB SZOPW ZNGOT FRATJ ZHTDT \
+PJLCA BDTGG FXAGL RCDBR BOIMB ITATG RTTJA BCJBR NOITG ATGKL SSZJB PGTTO XZYTG \
+TIMZZ HBKKT BGTIJ LCACA TRBDT KLXCN GTLOR LITBO IBETJ JZGIR JGLCC TOMFC ATLGD \
+ZCATG JALXA DBITC ATLGZ OTKGT RTOCY TGFKG TXLZN RLOCA TLGTF TRKGT RTOCS FMTCA \
+BOIBD FJZHT CZGND DBPTB OIELO ICATL GSLCC STMZZ HRBSR ZZOTI ZYTXZ SZGTI CATZC \
+ATGMS NTBOI BSSRB CSZZH LOPBC BOICB SHLOP BMZNC CATDJ ALSTC ATTBR CPGTJ GZRFJ \
+LCACA TXZDL OPIBF \n\nFind the plaintext.\n\n",
+  FontWeight->"Plain"],
+ "Solution.\n",
+ StyleBox["\nx = \[Gamma]*y + \[Delta]\n\n",
+  FontWeight->"Plain"]
+}], "Subsection",
+ CellChangeTimes->{{3.7765327409292192`*^9, 3.776532776433769*^9}, {
+   3.77660216712481*^9, 3.776602181058208*^9}, {3.7881163593031588`*^9, 
+   3.788116374799988*^9}, 3.7886987441926875`*^9, {3.788698800322029*^9, 
+   3.7886988085734267`*^9}, {3.7886988536335793`*^9, 3.7886988642430215`*^9}, 
+   3.7886999357562833`*^9, {3.7887001341127553`*^9, 3.7887003743911963`*^9}, {
+   3.7887030042787266`*^9, 3.788703011943624*^9}, {3.7887030478006983`*^9, 
+   3.78870315109616*^9}, {3.78870336246811*^9, 
+   3.7887033657141237`*^9}},ExpressionUUID->"47c051df-ff9b-4620-b18d-\
+9e32d9bdd670"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.788005140916257*^9, 3.7880051970039654`*^9}, {
+   3.7881163785570583`*^9, 3.788116431189191*^9}, {3.788178440560378*^9, 
+   3.7881784726988263`*^9}, 3.7886999494090605`*^9, {3.788700078530518*^9, 
+   3.7887001229385395`*^9}, 3.788700393719247*^9, {3.7887026165181637`*^9, 
+   3.7887026559114904`*^9}, {3.788702702619659*^9, 3.7887028549713907`*^9}, {
+   3.7887029083923597`*^9, 3.7887029678767557`*^9}, {3.7887031627489505`*^9, 
+   3.7887032141065807`*^9}, {3.7887032914269247`*^9, 
+   3.7887033438830013`*^9}, {3.78870338213323*^9, 
+   3.7887034205549383`*^9}},ExpressionUUID->"b743b983-f41b-4bbb-b0f2-\
+b82f8f5151fc"],
+
+Cell["Partly Known Plaintext (\[OpenCurlyDoubleQuote]Crib\
+\[CloseCurlyDoubleQuote]) Attack for Affine Cipher", "Subtitle",
+ CellChangeTimes->{{3.662725991337857*^9, 3.66272599506207*^9}, {
+  3.7765288438315344`*^9, 3.7765288470558567`*^9}, {3.7880037735341206`*^9, 
+  3.7880037790661297`*^9}, {3.788116205841404*^9, 3.788116212863657*^9}, {
+  3.7886979413177204`*^9, 3.788697974989856*^9}, {3.7886980876266685`*^9, 
+  3.7886980960265856`*^9}},ExpressionUUID->"c47daaf5-f87f-495b-a4bb-\
+aed697c3cd8c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["The ciphertext  SKROK REBTK ZKWQE EBKXZ HYCGW XKBGR E\nhas been \
+obtained with an affine cipher. The first letter of the plaintext is ",
+  FontWeight->"Plain"],
+ "m",
+ StyleBox[". \nFind the whole plaintext.\n\n",
+  FontWeight->"Plain"],
+ "Solution.\n\n",
+ StyleBox["x = y*\[Gamma] + \[Delta]",
+  FontWeight->"Plain"],
+ "\n\n"
+}], "Subsection",
+ CellChangeTimes->{{3.7765327409292192`*^9, 3.776532776433769*^9}, {
+   3.77660216712481*^9, 3.776602181058208*^9}, {3.7881163593031588`*^9, 
+   3.788116374799988*^9}, {3.78870040457733*^9, 3.7887004123595862`*^9}, {
+   3.788700569920844*^9, 3.7887006234316697`*^9}, {3.788703458339611*^9, 
+   3.7887034682514577`*^9}, {3.788703546440402*^9, 3.7887036503276424`*^9}, {
+   3.788703804958476*^9, 3.7887038217914224`*^9}, {3.7887038972162075`*^9, 
+   3.7887039125445023`*^9}, 3.7887039432360296`*^9, {3.7887040394903035`*^9, 
+   3.788704119122388*^9}, {3.788704226989193*^9, 3.788704511357561*^9}, {
+   3.788707006656035*^9, 
+   3.7887070093506813`*^9}},ExpressionUUID->"041def89-5fb0-46c6-831e-\
+894ebd04283e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cipher0", " ", "=", " ", 
+   RowBox[{
+   "stripall", "[", "\"\<SKROK REBTK ZKWQE EBKXZ HYCGW XKBGR E\>\"", "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.788005140916257*^9, 3.7880051970039654`*^9}, {
+  3.7881163785570583`*^9, 3.788116431189191*^9}, {3.788178440560378*^9, 
+  3.7881784726988263`*^9}, {3.788700631909473*^9, 3.7887006320925016`*^9}, {
+  3.788703664676161*^9, 3.788703829380432*^9}, {3.7887038721992903`*^9, 
+  3.7887038746434703`*^9}, {3.7887039169909735`*^9, 3.7887039315204086`*^9}, {
+  3.788704178386306*^9, 3.7887042075890408`*^9}, {3.788704253535311*^9, 
+  3.788704301626857*^9}, {3.788704336600169*^9, 3.788704361838012*^9}, {
+  3.788704403484974*^9, 3.7887045199744935`*^9}, {3.7887070351673865`*^9, 
+  3.7887070431170673`*^9}},ExpressionUUID->"6a5f2434-13fb-4d46-b98f-\
+af7d3705a0cf"],
+
+Cell["Extract Vigenere Key from Plaintext - Ciphertext Pair", "Subtitle",
+ CellChangeTimes->{{3.662725991337857*^9, 3.66272599506207*^9}, {
+  3.7765288438315344`*^9, 3.7765288470558567`*^9}, {3.7880037735341206`*^9, 
+  3.7880037790661297`*^9}, {3.788116205841404*^9, 3.788116212863657*^9}, {
+  3.7886979413177204`*^9, 3.788697974989856*^9}, {3.788698104946577*^9, 
+  3.7886981217069273`*^9}},ExpressionUUID->"a34d30d5-c5aa-4d5a-8561-\
+3e617bdf5d4f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["The plaintext  ",
+  FontWeight->"Plain"],
+ "thens heope nedhe rnewb ookan dbega ntore ad\nh",
+ StyleBox["as been encrypted with a Vigenere cipher. The result is the \
+ciphertext ",
+  FontWeight->"Plain"],
+ " \nWIWVH MARQW VTIDH SFMLG KRLSV SGAJB FBDWA DE\n\n",
+ StyleBox["Find the key.\n\n",
+  FontWeight->"Plain"],
+ "Solution.\n\n"
+}], "Subsection",
+ CellChangeTimes->{{3.7765327409292192`*^9, 3.776532776433769*^9}, {
+   3.77660216712481*^9, 3.776602181058208*^9}, {3.7881163593031588`*^9, 
+   3.788116374799988*^9}, {3.788700790217147*^9, 3.788700840300378*^9}, {
+   3.7887008874281845`*^9, 3.7887009470889006`*^9}, {3.7887046346958995`*^9, 
+   3.788704671137017*^9}, {3.7887049181524305`*^9, 3.788704921579653*^9}, 
+   3.788707054851635*^9},ExpressionUUID->"655a01f2-1389-4258-bc52-\
+d48588a5c2f4"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.788005140916257*^9, 3.7880051970039654`*^9}, {
+   3.7881163785570583`*^9, 3.788116431189191*^9}, {3.788178440560378*^9, 
+   3.7881784726988263`*^9}, 3.788700955218093*^9, {3.78870470876997*^9, 
+   3.788704768963584*^9}, {3.7887048079747825`*^9, 3.7887048976842957`*^9}, {
+   3.7887070618324986`*^9, 
+   3.7887070637933517`*^9}},ExpressionUUID->"b86b268f-73fc-4873-a5fb-\
+3d28cc98f548"],
+
+Cell["Given Ciphertext Attack for Vigenere Cipher", "Subtitle",
+ CellChangeTimes->{{3.662725991337857*^9, 3.66272599506207*^9}, {
+  3.7765288438315344`*^9, 3.7765288470558567`*^9}, {3.7880037735341206`*^9, 
+  3.7880037790661297`*^9}, {3.788116205841404*^9, 3.788116212863657*^9}, {
+  3.7886979413177204`*^9, 3.788697974989856*^9}, {3.788698134093254*^9, 
+  3.788698175558493*^9}},ExpressionUUID->"8f2cebf1-0bea-42a7-890b-\
+ec926bd09b09"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Decrypt the following ciphertext, which has been generated with a \
+Vigenere encryption.\n\nonsqscrkbhuxonsvedvzoztoizrhsbvtngucxufhdirg\n\
+cpmnzgxgvyrgdftoyrkxdszzrdfxdmrwmcnnokmni\n\
+kfhdnjtoeqpjxolrcckrdpxjzqrfdckxhisykklzdjnoutov\n\
+jckqgjavgtkqkchqxiudkuxbaxxeevrsqfrzlkffdcgdeq\n\
+dcckvhomeaxuoogxgxkpxshhomeulznourhdlpzrd\n\
+hsimqlhoizrhdodtdrtomrsyqvtlkqoidzqdxvjvogmg\n\
+veglfrckbdfkbxodfzviodznxuwpaxnkxvqlzoxjdkon\n\
+ouiovqoqqnwekoaxbiyxdczupuawvtmhibdzsqsnd\n\
+jxrfmjsowadckbhempkkvgcpgveqdcrkbaxonovap\n\
+vgxgxkpxshekooxdxyrirdubxryvqltgwxesimrhdgd\n\
+zrdxvnubweyamyvesklyuerzjosqxyknrzrzxghqug\n\
+ecsuxvtnkqxzboupsngzsasizogtomhewfrvzoyqxd\n\
+tqmapvtmlqnonkwnoonchkonxovfoyuxwtogofhxiy\n\
+gbnrkxklhesykrhdgdzrsqmprsddzgkkvgbzgxgfrv\n\
+zckqvdydhzoycswtsizoqeodtdhdonzdrmxvimrgx\n\
+oupvawzkhfuddtqfdsxqowykoirwtypmrwtoknbdeo\n\
+nikxsroupimddiovfehvogapansvsbjaxgmxyzrhxob\n\
+nswrymzruqorkbhmcdtdhxvdmsexoourhdknykqe\n\
+umodvtovrcrrkiishprvbsqsczzrhdrzgbwgzjtchqsim\n\
+swfrvzckqcvckfqbogsquxxxodeojlqhzdgkxhecdtvd\n\
+gbdkcpmxikbwtkonogdykvogtsnbylooiugdznonoq\n\
+xkpmrhpvzycwtkiacxmvrgcdxsozvhmlnkxwysijog\n\
+mxyyowfvzjdkqkamrdzyqkbeqdcyphqdrodkmxvy\nclpedziwtkockvdovrvbmvhucwfoijou\n\n\
+",
+  FontWeight->"Plain"],
+ "Solution.",
+ StyleBox["\n",
+  FontWeight->"Plain"]
+}], "Subsection",
+ CellChangeTimes->{{3.7765327409292192`*^9, 3.776532776433769*^9}, {
+  3.77660216712481*^9, 3.776602181058208*^9}, {3.7881163593031588`*^9, 
+  3.788116374799988*^9}, {3.7887016467447677`*^9, 3.788701652252155*^9}, {
+  3.7887017050961914`*^9, 3.7887018179776115`*^9}, {3.7887052945655966`*^9, 
+  3.788705315136601*^9}, {3.788705368808914*^9, 3.7887053765945187`*^9}, {
+  3.788705455533385*^9, 3.788705484600067*^9}, {3.7887056351811037`*^9, 
+  3.7887056478405294`*^9}, {3.788705701175353*^9, 3.788705707182771*^9}, {
+  3.7887057757303467`*^9, 3.788705777292156*^9}, {3.788707074551627*^9, 
+  3.7887070764858017`*^9}},ExpressionUUID->"55e10e9e-8497-424e-a956-\
+13ddac73d1b1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"cipher2", "=", 
+    RowBox[{"stripall", "[", "\"\<\>\"", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.7887018325098457`*^9, 3.7887018437165475`*^9}, {
+   3.7887049984998455`*^9, 3.7887050177493086`*^9}, 3.7887052822894793`*^9, {
+   3.7887053196949406`*^9, 3.7887053299068313`*^9}, {3.7887053636310267`*^9, 
+   3.7887054412785883`*^9}, {3.788705491331952*^9, 3.788705508751316*^9}, {
+   3.788705622859393*^9, 3.788705623606374*^9}, {3.7887056577308846`*^9, 
+   3.7887056581854486`*^9}, {3.788705712834364*^9, 3.788705720735196*^9}, {
+   3.788705754183714*^9, 3.788705843936199*^9}, {3.78870708765151*^9, 
+   3.788707092484567*^9}},ExpressionUUID->"cf91fdcc-6121-40d1-ac60-\
+eb2e2508a084"]
+}, Open  ]]
+},
+ScreenStyleEnvironment->"Presentation",
+Evaluator->"Local",
+WindowSize->{1264, 604},
+WindowMargins->{{-4, Automatic}, {Automatic, 0}},
+Magnification->1.25,
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Classroom.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 616, 9, 127, "Title",ExpressionUUID->"b96e3780-13e8-40e4-a25e-1af71aabfc8f"],
+Cell[1177, 31, 442, 6, 70, "Subtitle",ExpressionUUID->"1248eb4e-1bf8-4d85-aa9e-d8b6988a8603"],
+Cell[CellGroupData[{
+Cell[1644, 41, 1073, 22, 189, "Input",ExpressionUUID->"8084c9ac-6113-4097-b6a7-8fb628c88e92"],
+Cell[2720, 65, 188, 2, 84, "Output",ExpressionUUID->"a0897d49-614e-4754-a96d-f238def6e71d"]
+}, Open  ]],
+Cell[2923, 70, 388, 6, 70, "Subtitle",ExpressionUUID->"182e0878-9741-4d0e-9866-46354c1a5b67"],
+Cell[CellGroupData[{
+Cell[3336, 80, 976, 22, 315, "Subsection",ExpressionUUID->"cb15d116-3634-4833-a128-24c2e1279aa3"],
+Cell[4315, 104, 488, 7, 70, "Subtitle",ExpressionUUID->"ff48f62d-b1f0-4ff6-bb90-62503d51e406"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4840, 116, 1806, 28, 824, "Subsection",ExpressionUUID->"47c051df-ff9b-4620-b18d-9e32d9bdd670"],
+Cell[6649, 146, 668, 10, 86, "Input",ExpressionUUID->"b743b983-f41b-4bbb-b0f2-b82f8f5151fc"],
+Cell[7320, 158, 501, 7, 70, "Subtitle",ExpressionUUID->"c47daaf5-f87f-495b-a4bb-aed697c3cd8c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7858, 170, 1081, 22, 348, "Subsection",ExpressionUUID->"041def89-5fb0-46c6-831e-894ebd04283e"],
+Cell[8942, 194, 847, 15, 86, "Input",ExpressionUUID->"6a5f2434-13fb-4d46-b98f-af7d3705a0cf"],
+Cell[9792, 211, 449, 6, 70, "Subtitle",ExpressionUUID->"a34d30d5-c5aa-4d5a-8561-3e617bdf5d4f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10278, 222, 829, 18, 350, "Subsection",ExpressionUUID->"655a01f2-1389-4258-bc52-d48588a5c2f4"],
+Cell[11110, 242, 434, 7, 86, "Input",ExpressionUUID->"b86b268f-73fc-4873-a5fb-3d28cc98f548"],
+Cell[11547, 251, 437, 6, 70, "Subtitle",ExpressionUUID->"8f2cebf1-0bea-42a7-890b-ec926bd09b09"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12021, 262, 1998, 40, 984, "Subsection",ExpressionUUID->"55e10e9e-8497-424e-a956-13ddac73d1b1"],
+Cell[14022, 304, 765, 14, 121, "Input",ExpressionUUID->"cf91fdcc-6121-40d1-ac60-eb2e2508a084"]
+}, Open  ]]
+}
+]
+*)
+
