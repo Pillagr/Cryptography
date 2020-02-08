@@ -76,6 +76,7 @@ int determinant(int matrix[2][2]);
 int determinant(int matrix[3][3]);
 
 int gcd(int a, int b);
+double prime_estimate(double a, double b);
 //Vignere cipher
 string v_encrypt(string plaintext, string key);
 
@@ -160,7 +161,11 @@ int main( int argc, const char * argv[]) {
 
     //cout << bin_to_str("01000011011011110110110101100101001000000100000101101110011001000010000001001101011000010110101101100101001000000100100101110100");
    
-    cout << gcd(294, 182);
+    cout << gcd(8625, 2044);
+    //cout << fixed << prime_estimate(pow(10,8), 2*pow(10,8));
+    
+
+
     return 0;
 }
 
@@ -288,24 +293,32 @@ int determinant(int matrix[3][3]){
 
     return (A - B + C);
 }
-int gcd(int a, int b){
-    int q, r, r2=min(a,b);
+int gcd(int a, int b){ 
+    if (b > a) swap(a,b);
+    int q, r, r2=b;
     while(true){
+        
         q = a/b;
         r = a-(b*q);
-        if(r > 1){
+        cout << a << "=" << b << "*" << q << "+" << r << endl;
+        if(r != 0){
             a = b;
             b = r;
             r2 = r;
         }
         else{
+            //cout << a << "=" << b << "*" << q << "+" << r << endl;
             return r2;
         }
     }
-    
-
     return r2;
 }
+double prime_estimate(double a, double b){
+    double res = (b / log(b) - a/log(a));
+    return res;
+
+}
+
 
 /* ***** VIGENERE ***** */
 string v_encrypt(string plaintext, string key) {
